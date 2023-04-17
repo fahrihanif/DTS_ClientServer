@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Text.Json.Serialization;
 
 namespace API.Models;
 
@@ -9,5 +8,6 @@ public partial class University
 
     public string Name { get; set; } = null!;
 
-    public virtual ICollection<Education> TbMEducations { get; set; } = new List<Education>();
+    [JsonIgnore]
+    public virtual ICollection<Education>? TbMEducations { get; set; } = new List<Education>();
 }
