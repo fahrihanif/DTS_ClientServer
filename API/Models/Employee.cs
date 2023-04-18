@@ -1,4 +1,6 @@
-﻿namespace API.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace API.Models;
 
 public partial class Employee
 {
@@ -18,8 +20,9 @@ public partial class Employee
 
     public string PhoneNumber { get; set; } = null!;
 
+    [JsonIgnore]
     public virtual Account? TbMAccount { get; set; }
-
+    [JsonIgnore]
     public virtual Profiling? TbMProfiling { get; set; }
 }
 

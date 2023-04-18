@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Text.Json.Serialization;
 
 namespace API.Models;
 
@@ -9,7 +8,8 @@ public partial class Profiling
 
     public int EducationId { get; set; }
 
-    public virtual Education Education { get; set; } = null!;
-
-    public virtual Employee IdNavigation { get; set; } = null!;
+    [JsonIgnore]
+    public virtual Education? Education { get; set; } = null!;
+    [JsonIgnore]
+    public virtual Employee? IdNavigation { get; set; } = null!;
 }
