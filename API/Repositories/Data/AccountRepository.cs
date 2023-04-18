@@ -1,4 +1,5 @@
 ﻿using API.Contexts;
+using API.Handlers;
 using API.Models;
 using API.ViewModels;
 
@@ -31,7 +32,7 @@ public class AccountRepository : GeneralRepository<Account, string, MyContext>, 
     {
         await using var transaction = await _context.Database.BeginTransactionAsync();
         try {
-            var university = _universityRepository.InsertAsync(new University {
+            var university = await _universityRepository.InsertAsync(new University {
                 Name = registerVM.UniversityName
             });
 
@@ -55,7 +56,7 @@ public class AccountRepository : GeneralRepository<Account, string, MyContext>, 
 
             await InsertAsync(new Account {
                 Nik = employee!.Nik,
-                Password = registerVM.Password
+                Password = Hashing.HashPassword(registerVM.Password)
             });
 
             await _profilingRepository.InsertAsync(new Profiling {
@@ -88,6 +89,6 @@ public class AccountRepository : GeneralRepository<Account, string, MyContext>, 
                                             })
                                       .FirstOrDefault(ud => ud.Email == loginVM.Email);
 
-        return getUserData is not null && loginVM.Password == getUserData.Password;
+        return getUserData is not null && Hashing.ValidatePassword(loginVM.Password, getUserData.Password);
     }
 }

@@ -36,16 +36,16 @@ public class GeneralRepository<TEntity, TKey, TContext> : IGeneralRepository<TEn
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(TKey key)
+    public async Task DeleteAsync(TEntity entity)
     {
-        var entity = await GetByIdAsync(key);
-        _context.Set<TEntity>().Remove(entity!);
+        _context.Set<TEntity>().Remove(entity);
         await _context.SaveChangesAsync();
     }
 
     public virtual async Task<bool> IsExist(TKey key)
     {
         var entity = await GetByIdAsync(key);
+        _context.ChangeTracker.Clear();
         return entity != null;
     }
 }

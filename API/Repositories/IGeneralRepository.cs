@@ -6,6 +6,6 @@ public interface IGeneralRepository<TEntity, TKey>
     Task<TEntity?> GetByIdAsync(TKey key);
     Task<TEntity?> InsertAsync(TEntity entity);
     Task UpdateAsync(TEntity entity);
-    Task DeleteAsync(TKey key);
+    Task DeleteAsync(TEntity entity);
     Task<bool> IsExist(TKey key);
 }
